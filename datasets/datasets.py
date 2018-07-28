@@ -14,7 +14,7 @@ def ocean():
     torch.manual_seed(1) 
     torch.cuda.manual_seed_all(1)
 
-    ls = glob.glob("ocean/*.jpg")
+    ls = glob.glob("datasets/ocean/*.jpg")
 
     Z = []
     #shape = (100,100)

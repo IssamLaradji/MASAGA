@@ -23,7 +23,14 @@ def get_experiment(experiment, args):
         if experiment == "mnist_L":
             dList = ["Mnist"]
             mList = ["svrg", "saga", "sgd"]
-            eList = [10]
+            eList = [20]
+            lList = ["L"]
+            sList = ["lipschitz", "uniform"]
+
+        if experiment == "ocean_L":
+            dList = ["ocean"]
+            mList = ["svrg", "saga", "sgd"]
+            eList = [50]
             lList = ["L"]
             sList = ["lipschitz", "uniform"]
 

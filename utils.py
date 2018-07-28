@@ -1,5 +1,7 @@
 import os, json
+import torch
 import subprocess
+
 def save_json(fname, data):
     create_dirs(fname)
     with open(fname, "w") as json_file:
@@ -38,12 +40,25 @@ def imsave(fname, img):
     import pylab as plt
     plt.imsave(fname,img,cmap="gray")
 
+@torch.enable_grad()
+def compute_grad(loss_function, x, Z):
+    x_tmp = torch.FloatTensor(x.clone().data)
+    x_tmp.requires_grad=True
 
-def load_history(d, m, l, e, s):
+    if x_tmp.grad is not None:
+        x_tmp.grad.zero_()
+
+    loss_function(x_tmp, Z).backward()
+
+    G = x_tmp.grad.detach()
+
+    return G 
+
+def load_history(d, m, l, e, s, r):
     exp_name = "{}-{}-{}-{}-{}".format(d,m,l,e,s)
     path_save = "/mnt/home/issam/manSAGA/Saves/{}.json".format(exp_name)
     path_model = "/mnt/home/issam/manSAGA/Saves/{}.pth".format(exp_name)
-    if os.path.exists(path_save):
+    if os.path.exists(path_save) and not r:
         return load_json(path_save)
 
     else:
@@ -68,7 +83,7 @@ def save_image(x, shape, i, prefix):
 n2d = {"synthetic": "Synthetic",
                     "Mnist":"MNIST",
                     "ocean":"Ocean"}
-m2m = {"svrg":"RSVRG", "sgd":"RSGD", "saga":"MASAGA"}
+
 
 l2l = lambda x: "%s %s" % (x.split("_")[0], x.split(" ")[1])
 
@@ -85,7 +100,9 @@ l2l = lambda x: "%s %s" % (x.split("_")[0], x.split(" ")[1])
 #     ls_markers = [("-", "o"), ("-", "p"), ("-", "D"), ("-", "^"), ("-", "s"),
 #                ("-", "8"), ("-", "o"), ("-", "o"), ("-", "o"), ("-", "o"), 
 #                ("-", "o"), ("-", "o")]
-def get_plot_label(m, s):
+def get_plot_label(m, s, l):
+    s2s = {"uniform":"U", "lipschitz":"NU"}
+    m2m = {"svrg":"RSVRG", "sgd":"RSGD", "saga":"MASAGA"}
     return l2l("%s_$10^{-%s}$ (%s)" % (m2m[m],str(l)[-1], s2s[s]))                            
 # def get_best():
 #     scores = []

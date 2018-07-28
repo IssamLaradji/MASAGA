@@ -15,36 +15,29 @@ from losses import sphere as sp
 
 
 class Base(nn.Module):
-    def __init__(self, Z, F_func, G_func, lr, project, 
-                 autograd):
+    def __init__(self, Z, F_func, G_func, lr):
         super().__init__()
         self.F_func = F_func 
         self.G_func = G_func
         self.lr = lr
         
         self.n = Z.shape[0]
-
+        d = Z.shape[1]
         self.Z = Z
         
         # Initialize x
         np.random.seed(1)
         #r = np.random.randn(Z.shape[1], 1)
-        r = torch.ones(Z.shape[1], 1)
-        self.x  = nn.Parameter(r / torch.norm(r))
-        #x = torch.zeros(Z.shape[1], 1)
-        # self.x = x
+        r = torch.ones(d, 1)
+        self.x  = nn.Parameter(r / np.sqrt(d))
 
-        #self.proj = project
-        #self.autograd = autograd
         self.proj = True
         self.autograd = False
 
 #--------------------------------------------------
 class SVRG(Base):
-    def __init__(self, Z, F_func, G_func, lr, project=True, 
-                 autograd=False):
-        super().__init__(Z, F_func, G_func, lr, project, 
-                 autograd)
+    def __init__(self, Z, F_func, G_func, lr):
+        super().__init__(Z, F_func, G_func, lr)
         
         self.x_outer = self.x.clone().detach()
         self.mu = torch.zeros(self.x.shape)
@@ -72,10 +65,8 @@ class SVRG(Base):
 
 #--------------------------------------------------
 class SGD(Base):
-    def __init__(self, Z, F_func, G_func, lr, project=True, 
-                 autograd=False):
-        super().__init__(Z, F_func, G_func, lr, project, 
-                 autograd)
+    def __init__(self, Z, F_func, G_func, lr):
+        super().__init__(Z, F_func, G_func, lr)
     
     @torch.no_grad()
     def step(self, Zi, **extras):
@@ -89,10 +80,8 @@ class SGD(Base):
 
 #--------------------------------------------------
 class SAGA(Base):
-    def __init__(self, Z, F_func, G_func, lr, project=True, 
-                 autograd=False):
-        super().__init__(Z, F_func, G_func, lr, project, 
-                 autograd)
+    def __init__(self, Z, F_func, G_func, lr):
+        super().__init__(Z, F_func, G_func, lr)
 
         self.x_init = self.x.clone().detach()
 

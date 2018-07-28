@@ -5,17 +5,6 @@ from core import sphere
 import utils as ut 
 
 #------- LEADING EIGENVECTOR OBJECTIVE
-def reshape(x, Z):
-    if isinstance(x, np.ndarray):
-        x = torch.FloatTensor(x)
-
-    if x.dim() == 1:
-        x = x.unsqueeze(1)        
-    if Z.dim() == 1:
-        Z = Z.unsqueeze(0)
-
-    return x, Z
-
 def Loss(x, Z):
     x, Z = reshape(x, Z)
 
@@ -57,3 +46,16 @@ def leading_eigenvecor(Z):
 
     #assert False not in (eigh[0]>0)
     return eigh[1][:, -1]
+
+
+#### - MISC
+def reshape(x, Z):
+    if isinstance(x, np.ndarray):
+        x = torch.FloatTensor(x)
+
+    if x.dim() == 1:
+        x = x.unsqueeze(1)        
+    if Z.dim() == 1:
+        Z = Z.unsqueeze(0)
+
+    return x, Z
