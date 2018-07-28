@@ -18,8 +18,6 @@ import train
 from addons import vis
 
 
-s2s = {"uniform":"U", "lipschitz":"NU"}
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-e','--exp') 
@@ -35,7 +33,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-
     dList, mList, eList, lList, sList = experiments.get_experiment(args.exp, args)
     mList.sort()
     sList.sort()
@@ -44,7 +41,6 @@ if __name__ == "__main__":
     results = {}
     for d, m, e, l, s in product(dList, mList, eList, lList, sList):
         history = ut.load_history(d, m, l, e, s, args.reset)
-
 
         if args.mode == "train":
             if len(history["loss"])==0  or args.reset:
@@ -56,8 +52,6 @@ if __name__ == "__main__":
             if len(history["loss"])==0:
                 continue
             results[history["exp_name"]] = history["loss"][-1]
-           
-
 
         if args.mode == "qualitative":
             if shape is not None:
@@ -65,7 +59,6 @@ if __name__ == "__main__":
 
                 ut.imsave(img_name, model.x.numpy().reshape(shape))
                 print(img_name)
-
 
         if args.mode == "plot_best":
             if history["exp_name_no_lr"] in results:
@@ -103,7 +96,6 @@ if __name__ == "__main__":
         pp_main.plot(ylabel="$(f(x) - f^*)/|f^*|$ on the %s dataset" % ut.n2d[d], 
                      xlabel="Epochs",
                      yscale="log")
-
 
         #pp_main.axList[0].set_ylim(bottom=1e-7)
         vis.vis_figure(pp_main.fig)

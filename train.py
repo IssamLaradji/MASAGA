@@ -28,7 +28,6 @@ def train(dataset_name, model_name, learning_rate, epochs,
     Z = Z - Z.mean(0)
     n = Z.shape[0]
 
-    
     nList = np.arange(n)
     if sampling_method == "uniform":
         P = nList / nList.sum()
@@ -36,7 +35,6 @@ def train(dataset_name, model_name, learning_rate, epochs,
         L = pv_loss.Lipschitz(Z)
         P = L / L.sum()
        
-
     if learning_rate == "L":
         L = pv_loss.Lipschitz(Z).max()
         learning_rate = 1./L
@@ -46,16 +44,12 @@ def train(dataset_name, model_name, learning_rate, epochs,
                         F_func=pv_loss.Loss, 
                         G_func=pv_loss.Gradient, 
                         lr=learning_rate)
-
     # Solve    
     x_sol = pv_loss.leading_eigenvecor(Z)
-    
     loss_min = pv_loss.Loss(x_sol, Z)
-
     # sanity_checks.test_lossmin(model.x, Z, loss_min)    
     # sanity_checks.test_gradient(torch.FloatTensor(x_sol)[:,None], Z)    
     # sanity_checks.test_batch_loss_grad(model.x, Z)
-
     e = 0.
     n_iters = 0.
     # Train
