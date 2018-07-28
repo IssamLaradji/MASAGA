@@ -12,7 +12,6 @@ from itertools import product
 from addons import pretty_plot
 import utils as ut
 import pandas as pd
-import borgy_utils as bu 
 import os 
 import experiments
 import train
@@ -25,7 +24,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-e','--exp') 
     parser.add_argument('-m','--mode') 
-    parser.add_argument('-b','--borgy', type=int, default=0) 
     parser.add_argument('-r','--reset', default=0, type=int) 
     parser.add_argument('-c','--cut', default=None, type=int) 
 
@@ -50,14 +48,9 @@ if __name__ == "__main__":
 
         if args.mode == "train":
             if len(history["loss"])==0  or args.reset:
-                if args.borgy:
-                    command = bu.get_command(d,m,e,l,s, args.reset)                    
-                    bu.run_command(command, force=True)
-
-                else:
-                    train.train(dataset_name=d, model_name=m,
-                                epochs=e, learning_rate=l, 
-                                sampling_method=s, reset=args.reset)                
+                train.train(dataset_name=d, model_name=m,
+                            epochs=e, learning_rate=l, 
+                            sampling_method=s, reset=args.reset)                
 
         if args.mode == "summary":
             if len(history["loss"])==0:
