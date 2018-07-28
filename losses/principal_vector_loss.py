@@ -2,6 +2,7 @@ import torch
 
 import numpy as np
 from core import sphere
+import utils as ut 
 
 #------- LEADING EIGENVECTOR OBJECTIVE
 def reshape(x, Z):
@@ -29,17 +30,7 @@ def Gradient(x, Z, proj=True, autograd=False):
     n = float(Z.shape[0])
 
     if autograd:        
-        with torch.enable_grad():
-            x_tmp = torch.FloatTensor(x.clone().data)
-            x_tmp.requires_grad=True
-
-            if x_tmp.grad is not None:
-                x_tmp.grad.zero_()
-
-            Loss(x_tmp, Z).backward()
-
-            G = x_tmp.grad.detach()
-        
+        G = ut.compute_grad(Loss, x, Z)
     else:
         A = Z.t().mm(Z)
         G = - 2. * A.mm(x) / n
@@ -55,7 +46,7 @@ def Lipschitz(Z):
 
     for i in range(int(n)):
         L[i] = (Z[i]**2).sum().item()
-        
+
     return L
 
 ## LEADING EIGEN
