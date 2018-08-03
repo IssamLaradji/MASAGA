@@ -39,7 +39,7 @@ def get_experiment(experiment, args):
             dList = ["synthetic"]
             mList = ["saga", "svrg", "sgd"]
             eList = [100]
-            lList = ["L"]
+            lList = ["L1"]
             sList = ["uniform","lipschitz"]
 
         if experiment == "mnistAll":

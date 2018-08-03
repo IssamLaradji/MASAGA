@@ -55,30 +55,32 @@ def train(dataset_name, model_name, learning_rate, epochs,
     # sanity_checks.test_batch_loss_grad(model.x, Z)
     e = 0.
     n_iters = 0.
+
     # Train
-    while e < (epochs + 1):
-        next_epoch = True
+    with torch.no_grad():
+        while e < (epochs + 1):
+            next_epoch = True
 
-        # inner loop
-        for ii in range(n):
-            e = n_iters / float(n)
-            # Verbose
-            if ii % 500 == 0:
-                L =  (float((model.F_func(model.x, Z))) - float(loss_min)) / np.abs(float(loss_min))
-                
-                history["loss"] += [{"loss":L, "epoch":e}]  
-                print("Epoch: %.2f/%d - %s - learning_rate %.3f - loss: %.3f" % 
-                     (e, epochs, history["exp_name"], lr,
-                      (L*n)))
+            # inner loop
+            for ii in range(n):
+                e = n_iters / float(n)
+                # Verbose
+                if ii % 500 == 0:
+                    L =  (float((model.F_func(model.x, Z))) - float(loss_min)) / np.abs(float(loss_min))
+                    
+                    history["loss"] += [{"loss":L, "epoch":e}]  
+                    print("Epoch: %.2f/%d - %s - lr %f - loss: %.3f" % 
+                         (e, epochs, history["exp_name"], lr,
+                          (L*n)))
 
-            # select a random sample
-            i = np.random.choice(nList, replace=True, p=P)
+                # select a random sample
+                i = np.random.choice(nList, replace=True, p=P)
 
-            # make a step
-            n_evals = model.step(Z[i], index=i, next_epoch=next_epoch)
-            next_epoch = False
+                # make a step
+                n_evals = model.step(Z[i], index=i, next_epoch=next_epoch)
+                next_epoch = False
 
-            n_iters += n_evals
+                n_iters += n_evals
         
     # After training is done
     ut.save_json(history["path_save"], history)

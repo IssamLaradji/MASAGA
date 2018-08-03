@@ -18,6 +18,7 @@ class Base(nn.Module):
         # Initialize x
         np.random.seed(1)
         r = torch.ones(d, 1)
+
         
         self.x  = nn.Parameter(r / np.sqrt(d))
 
