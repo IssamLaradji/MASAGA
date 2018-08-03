@@ -4,18 +4,22 @@ import torch
 
 from sklearn.datasets import fetch_mldata
 from sklearn.utils import shuffle
-from skimage.io import imread
-from skimage.transform import rescale
+
+from scipy.misc import imread
+from scipy.misc import imresize
+# from skimage.io import imread
+# from skimage.transform import rescale
 import glob
 
 def ocean():    
     ls = glob.glob("datasets/ocean/*.jpg")
 
     Z = []
+
     #shape = (100,100)
-    shape = rescale(imread(ls[0]),0.3,mode="reflect").shape[:2]
+    shape = imresize(imread(ls[0]),0.3).shape[:2]
     for l in ls:
-        Z += [rescale(imread(l),0.3, mode="reflect").ravel()]
+        Z += [imresize(imread(l),0.3).ravel()]
     Z = np.array(Z) / 255.
     
     return torch.FloatTensor(Z), shape

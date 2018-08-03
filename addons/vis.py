@@ -1,5 +1,5 @@
 import numpy as np
-from skimage.io import imread
+# from skimage.io import imread
 import pylab as plt
 import torch 
 import PIL
