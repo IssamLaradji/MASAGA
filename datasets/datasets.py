@@ -7,6 +7,9 @@ from sklearn.utils import shuffle
 
 from scipy.misc import imread
 from scipy.misc import imresize
+
+from scipy.ndimage.interpolation import zoom
+from scipy.ndimage import imread
 # from skimage.io import imread
 # from skimage.transform import rescale
 import glob
@@ -17,9 +20,11 @@ def ocean():
     Z = []
 
     #shape = (100,100)
-    shape = imresize(imread(ls[0]),0.3).shape[:2]
+
+    shape = zoom(imread(ls[0]),0.3).shape[:2]
+
     for l in ls:
-        Z += [imresize(imread(l),0.3).ravel()]
+        Z += [zoom(imread(l),0.3).ravel()]
     Z = np.array(Z) / 255.
     
     return torch.FloatTensor(Z), shape

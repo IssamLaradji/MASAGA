@@ -1,5 +1,6 @@
 import numpy as np
-# from skimage.io import imread
+# from scipy.ndimage.interpolation import zoom
+
 import pylab as plt
 import torch 
 import PIL
