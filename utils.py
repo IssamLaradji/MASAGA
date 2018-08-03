@@ -69,7 +69,6 @@ def load_history(d, m, l, e, s, r):
                 "exp_name":exp_name,
                 "path_model":path_model,
                 "path_save":path_save,
-                "path_plot":"figures/{}.png".format(exp_name),
                 "loss":[]}
 
     return exp_name

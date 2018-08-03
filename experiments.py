@@ -38,7 +38,7 @@ def get_experiment(experiment, args):
         if experiment == "synthetic_L":
             dList = ["synthetic"]
             mList = ["saga", "svrg", "sgd"]
-            eList = [100]
+            eList = [2]
             lList = [1e-1, "L1"]
             sList = ["uniform","lipschitz"]
 

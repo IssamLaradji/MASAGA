@@ -83,16 +83,18 @@ if __name__ == "__main__":
                      xlabel="Epochs",
                      yscale="log")
 
+
+        path_plot = "figures/{}.png".format(history["exp_name"])
         #pp_main.axList[0].set_ylim(bottom=1e-7)
         # vis.vis_figure(pp_main.fig)
         pp_main.fig.suptitle("")
 
         pp_main.fig.tight_layout(rect=[0, 0.03, 1, 0.95])
-        figName = history["path_plot"]
+        figName = path_plot
         ut.create_dirs(figName)
         pp_main.fig.savefig(figName, dpi = 600)
 
-        figName = history["path_plot"].replace(".png", ".pdf")
+        figName = path_plot.replace(".png", ".pdf")
         pp_main.fig.savefig(figName, dpi = 600) 
     else:
         print(results)
