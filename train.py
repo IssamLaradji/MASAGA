@@ -1,7 +1,6 @@
-
 import matplotlib
 matplotlib.use('Agg')
-import math
+
 import torch
 import numpy as np
 from datasets import datasets as da

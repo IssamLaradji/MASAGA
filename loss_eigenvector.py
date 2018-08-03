@@ -1,7 +1,6 @@
 import torch
 
 import numpy as np
-import utils as ut 
 
 #------- LEADING EIGENVECTOR OBJECTIVE
 def Loss(x, Z):
@@ -13,15 +12,12 @@ def Loss(x, Z):
     f = - x.t().mm(A.mm(x))
     return f.squeeze() / n
 
-def Gradient(x, Z, proj=True, autograd=False):
+def Gradient(x, Z, proj=True):
     x, Z = reshape(x, Z)
     n = float(Z.shape[0])
 
-    if autograd:        
-        G = ut.compute_grad(Loss, x, Z)
-    else:
-        A = Z.t().mm(Z)
-        G = - 2. * A.mm(x) / n
+    A = Z.t().mm(Z)
+    G = - 2. * A.mm(x) / n
         
     if proj:
         return Proj(x, G)

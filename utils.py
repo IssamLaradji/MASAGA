@@ -40,7 +40,7 @@ def imsave(fname, img):
     import pylab as plt
     plt.imsave(fname,img,cmap="gray")
 
-@torch.enable_grad()
+# @torch.enable_grad()
 def compute_grad(loss_function, x, Z):
     x_tmp = torch.FloatTensor(x.clone().data)
     x_tmp.requires_grad=True
