@@ -40,7 +40,10 @@ def train(dataset_name, model_name, learning_rate, epochs,
         P = L / L.sum()
     
     L = loss_eigenvector.Lipschitz(Z).max()    
-    lr = get_learning_rate(L, learning_rate)
+    if "L" in learning_rate:
+        lr = get_learning_rate(L, learning_rate)
+    else:
+        lr = learning_rate
 
     # MODEL
     model = models.MODELS[model_name](Z=Z, 
