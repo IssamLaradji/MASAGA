@@ -5,8 +5,8 @@ import torch
 from sklearn.datasets import fetch_mldata
 from sklearn.utils import shuffle
 
-from scipy.misc import imread
-from scipy.misc import imresize
+# from scipy.misc import imread
+# from scipy.misc import imresize
 
 from scipy.ndimage.interpolation import zoom
 from scipy.ndimage import imread
