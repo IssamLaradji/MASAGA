@@ -29,10 +29,11 @@ def get_experiment(experiment, args):
 
         if experiment == "ocean_L":
             dList = ["ocean"]
-            mList = ["svrg", "saga", "sgd"]
+            mList = ["svrg", "saga"]
             eList = [50]
-            lList = ["L"]
-            sList = ["lipschitz", "uniform"]
+            lList = ["L1","L2","L3", "L50", "L100"]
+            sList = ["lipschitz"]
+
 
         if experiment == "synthetic_L":
             dList = ["synthetic"]

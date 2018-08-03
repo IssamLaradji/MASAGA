@@ -1,18 +1,8 @@
 import torch
-import torchvision
-import torchvision.transforms as transforms
-from torch.autograd import Variable, grad
 import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-import random
-import matplotlib.pyplot as plt
 import numpy as np
-import time
-import copy
 
-from losses import sphere as sp
-
+import loss_eigenvector as loss_ev
 
 class Base(nn.Module):
     def __init__(self, Z, F_func, G_func, lr):
@@ -57,8 +47,8 @@ class SVRG(Base):
         g_inner = self.G_func(self.x, Zi, proj=self.proj, autograd=self.autograd)
         g_outer = self.G_func(self.x_outer, Zi, proj=self.proj, autograd=self.autograd)
 
-        V = g_inner - sp.Transport(g_outer - self.mu, None, self.x)
-        self.x.data = sp.Exp(self.x, -self.lr * V)
+        V = g_inner - loss_ev.Transport(g_outer - self.mu, None, self.x)
+        self.x.data = loss_ev.Exp(self.x, -self.lr * V)
 
         return n_evals
 
@@ -74,7 +64,7 @@ class SGD(Base):
 
         g = self.G_func(self.x, Zi, proj=self.proj, autograd=self.autograd)
 
-        self.x.data = sp.Exp(self.x, -self.lr * g)
+        self.x.data = loss_ev.Exp(self.x, -self.lr * g)
 
         return n_evals
 
@@ -103,11 +93,11 @@ class SAGA(Base):
                         proj=self.proj, 
                         autograd=self.autograd)
 
-        V = g - sp.Transport(Mi - self.mu, None, self.x)
-        self.x.data = sp.Exp(self.x, -self.lr * V)
+        V = g - loss_ev.Transport(Mi - self.mu, None, self.x)
+        self.x.data = loss_ev.Exp(self.x, -self.lr * V)
         
         # Update previous grad and mean
-        g = sp.Transport(g, None, self.x_init)
+        g = loss_ev.Transport(g, None, self.x_init)
         self.mu += (1./n) * (g - Mi)
         self.M[index] = g.clone()
 

@@ -7,8 +7,11 @@ import numpy as np
 from datasets import datasets as da
 import models
 import utils as ut
-from losses import principal_vector_loss as pv_loss
+import loss_eigenvector
 from addons import sanity_checks
+
+def get_learning_rate(L, string):
+    return 1. / (L*int(string[1:]))
 
 def train(dataset_name, model_name, learning_rate, epochs, 
           sampling_method, reset, save_img=False):
@@ -29,24 +32,25 @@ def train(dataset_name, model_name, learning_rate, epochs,
     n = Z.shape[0]
 
     nList = np.arange(n)
+    
+
     if sampling_method == "uniform":
         P = nList / nList.sum()
     elif sampling_method == "lipschitz":
-        L = pv_loss.Lipschitz(Z)
+        L = loss_eigenvector.Lipschitz(Z)
         P = L / L.sum()
-       
-    if learning_rate == "L":
-        L = pv_loss.Lipschitz(Z).max()
-        learning_rate = 1./L
+    
+    L = loss_eigenvector.Lipschitz(Z).max()    
+    lr = get_learning_rate(L, learning_rate)
 
     # MODEL
     model = models.MODELS[model_name](Z=Z, 
-                        F_func=pv_loss.Loss, 
-                        G_func=pv_loss.Gradient, 
-                        lr=learning_rate)
+                        F_func=loss_eigenvector.Loss, 
+                        G_func=loss_eigenvector.Gradient, 
+                        lr=lr)
     # Solve    
-    x_sol = pv_loss.leading_eigenvecor(Z)
-    loss_min = pv_loss.Loss(x_sol, Z)
+    x_sol = loss_eigenvector.leading_eigenvecor(Z)
+    loss_min = loss_eigenvector.Loss(x_sol, Z)
     # sanity_checks.test_lossmin(model.x, Z, loss_min)    
     # sanity_checks.test_gradient(torch.FloatTensor(x_sol)[:,None], Z)    
     # sanity_checks.test_batch_loss_grad(model.x, Z)

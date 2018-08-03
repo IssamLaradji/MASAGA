@@ -1,4 +1,4 @@
-from losses import principal_vector_loss as pv_loss
+import loss_eigenvector as pv_loss
 import torch
 
 def assert_similer(exact, ours):

@@ -5,42 +5,18 @@ import torch
 from sklearn.datasets import fetch_mldata
 from sklearn.utils import shuffle
 from skimage.io import imread
-from skimage.transform import resize,rescale
+from skimage.transform import rescale
 import glob
 
-def ocean():
-    # SET SEED
-    np.random.seed(1)
-    torch.manual_seed(1) 
-    torch.cuda.manual_seed_all(1)
-
+def ocean():    
     ls = glob.glob("datasets/ocean/*.jpg")
 
     Z = []
     #shape = (100,100)
-    shape = rescale(imread(ls[0]),0.3).shape[:2]
+    shape = rescale(imread(ls[0]),0.3,mode="reflect").shape[:2]
     for l in ls:
         Z += [rescale(imread(l),0.3, mode="reflect").ravel()]
     Z = np.array(Z) / 255.
-    
-    #V = loss_function.leading_eigenvecor(Z)
-
-    #ut.imsave("leading.png", Z[0].reshape(shape))
-
-    # try:
-    #     mnist = fetch_mldata('MNIST original', data_home="/mnt/home/issam/Datasets/")
-    # except:
-    #     mnist = fetch_mldata('MNIST original')
-    # X, y = shuffle(mnist["data"], mnist["target"])
-    # X = X / 255.
-    # y = y
-
-    # ind = y <= 4
-    # X = X[ind][:2000]
-
-    # n, d = X.shape
-    # Z = X
-    # Z = torch.FloatTensor(X)
     
     return torch.FloatTensor(Z), shape
 

@@ -1,18 +1,12 @@
 import matplotlib
 matplotlib.use('Agg')
 
-import math
-import torch
-from matplotlib import pyplot as plt
 import numpy as np
-from torch.utils import data
 import argparse
-import main
 from itertools import product
 from addons import pretty_plot
 import utils as ut
 import pandas as pd
-import os 
 import experiments
 import train
 from addons import vis
@@ -52,13 +46,6 @@ if __name__ == "__main__":
             if len(history["loss"])==0:
                 continue
             results[history["exp_name"]] = history["loss"][-1]
-
-        if args.mode == "qualitative":
-            if shape is not None:
-                img_name ="/mnt/home/issam/Summaries/manSAGA/qualitative/%s.png"%dataset_name
-
-                ut.imsave(img_name, model.x.numpy().reshape(shape))
-                print(img_name)
 
         if args.mode == "plot_best":
             if history["exp_name_no_lr"] in results:
