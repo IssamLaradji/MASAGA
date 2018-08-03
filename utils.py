@@ -60,7 +60,7 @@ def load_history(d, m, l, e, s, r):
     #path_model = "/mnt/home/issam/manSAGA/Saves/{}.pth".format(exp_name)
     path_save = "checkpoints/{}.json".format(exp_name)
     path_model = "checkpoints/{}.pth".format(exp_name)
-    
+
     if os.path.exists(path_save) and not r:
         return load_json(path_save)
 
@@ -69,7 +69,7 @@ def load_history(d, m, l, e, s, r):
                 "exp_name":exp_name,
                 "path_model":path_model,
                 "path_save":path_save,
-                "path_plot":"checkpoints/{}.png".format(exp_name),
+                "path_plot":"figures/{}.png".format(exp_name),
                 "loss":[]}
 
     return exp_name
