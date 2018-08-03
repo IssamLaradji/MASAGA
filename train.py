@@ -14,7 +14,7 @@ def get_learning_rate(L, string):
 
 def train(dataset_name, model_name, learning_rate, epochs, 
           sampling_method, reset, save_img=False):
-
+    # epochs=2
     history = ut.load_history(dataset_name, model_name, 
                               learning_rate, epochs, 
                               sampling_method, reset)

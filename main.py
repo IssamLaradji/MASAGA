@@ -35,7 +35,7 @@ if __name__ == "__main__":
     results = {}
     for d, m, e, l, s in product(dList, mList, eList, lList, sList):
         history = ut.load_history(d, m, l, e, s, args.reset)
-
+        
         if args.mode == "train":
             if len(history["loss"])==0  or args.reset:
                 train.train(dataset_name=d, model_name=m,
@@ -52,7 +52,6 @@ if __name__ == "__main__":
                 continue
 
             results[history["exp_name_no_lr"]] = l
-            
             ncols = len(dList)
             nrows = 1
             if create_plot == False:
@@ -85,7 +84,7 @@ if __name__ == "__main__":
                      yscale="log")
 
         #pp_main.axList[0].set_ylim(bottom=1e-7)
-        vis.vis_figure(pp_main.fig)
+        # vis.vis_figure(pp_main.fig)
         pp_main.fig.suptitle("")
 
         pp_main.fig.tight_layout(rect=[0, 0.03, 1, 0.95])
