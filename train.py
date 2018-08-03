@@ -67,8 +67,8 @@ def train(dataset_name, model_name, learning_rate, epochs,
                 L =  (float((model.F_func(model.x, Z))) - float(loss_min)) / np.abs(float(loss_min))
                 
                 history["loss"] += [{"loss":L, "epoch":e}]  
-                print("Epoch: %.2f/%d - %s - loss: %.3f" % 
-                     (e, epochs, history["exp_name"],
+                print("Epoch: %.2f/%d - %s - learning_rate %.3f - loss: %.3f" % 
+                     (e, epochs, history["exp_name"], lr,
                       (L*n)))
 
             # select a random sample
