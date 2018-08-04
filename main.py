@@ -48,10 +48,10 @@ if __name__ == "__main__":
             results[history["exp_name"]] = history["loss"][-1]
 
         if args.mode == "plot_best":
-            if history["exp_name_no_lr"] in results:
-                continue
+            # if history["exp_name_no_lr"] in results:
+            #     continue
 
-            results[history["exp_name_no_lr"]] = l
+            # results[history["exp_name_no_lr"]] = l
             ncols = len(dList)
             nrows = 1
             if create_plot == False:
@@ -75,7 +75,7 @@ if __name__ == "__main__":
            
             pp_main.add_yxList(y_vals=y_vals, 
                                x_vals=x_vals, 
-                               label=ut.get_plot_label(m, s, l))
+                               label=ut.get_plot_label(m, s, l) + " - {}".format(l))
     
 
     if args.mode == "plot_best":
