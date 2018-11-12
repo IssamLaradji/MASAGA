@@ -1,7 +1,7 @@
 # MASAGA
 ## Description
 
-TBA
+Official code for the paper ["MASAGA: A Linearly-Convergent Stochastic First-Order Method for Optimization on Manifolds"](http://www.ecmlpkdd2018.org/wp-content/uploads/2018/09/617.pdf).
 
 
 ## Requirements
@@ -34,10 +34,10 @@ python main.py -e mnist_L -m train -r 1
 If you find the code useful for your research, please cite:
 
 ```bibtex
-@Article{TBA,
-    title={TBA},
-    author={TBA},
-    journal = {arXiv},
-    year = {2018}
+@article{babanezhadmasaga,
+  title={MASAGA: A Linearly-Convergent Stochastic First-Order Method for Optimization on Manifolds},
+  author={Babanezhad, Reza and Laradji, Issam H and Shafaei, Alireza and Schmidt, Mark},
+  journal={ECML},
+  year={2018}
 }
 ```
