@@ -1,7 +1,7 @@
 # MASAGA
 ## Description
 
-Official code for the paper ["MASAGA: A Linearly-Convergent Stochastic First-Order Method for Optimization on Manifolds"](http://www.ecmlpkdd2018.org/wp-content/uploads/2018/09/617.pdf).
+Official code for the paper ["MASAGA: A Linearly-Convergent Stochastic First-Order Method for Optimization on Manifolds"](http://www.ecmlpkdd2018.org/wp-content/uploads/2018/09/617.pdf). We obtained the projection definitions from ["manopt"](https://www.manopt.org/manifold_documentation_sphere.html).
 
 
 ## Requirements
